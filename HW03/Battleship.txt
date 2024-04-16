@@ -1,0 +1,251 @@
+import java.util.Scanner;
+import java.util.*;
+import java.io.*;
+
+public class Battleship {
+
+    // 1. print out the message Welcome to Battleship!
+    // 2. prompt each user to enter coordinates for five ships of length one.
+    // 3. create two 5x5 grids which will store player's ship locations
+    // 4. create two 5x5 grids which will display the history of hits/misses
+    // 5. Interact with user. Prompt user to target
+    public static void main(String[] args) {
+
+        char[][] p1LocGrid = new char[5][5];
+        char[][] p2LocGrid = new char[5][5];
+        char[][] p1HistGrid = new char[5][5];
+        char[][] p2HistGrid = new char[5][5];
+        char[][] p1FinalGrid = new char[5][5];
+        char[][] p2FinalGrid = new char[5][5];
+	int numP1Ships = 0;
+	int numP2Ships = 0;
+	boolean noWin = true;
+	int p1row;
+	int p2row;
+	int p1col;
+	int p2col;
+	int r1;
+	int r2; 
+	int c1;
+       	int c2;
+
+	// initialize grids with dashes
+	p1LocGrid = createPlayerGrid(p1LocGrid);
+	p2LocGrid = createPlayerGrid(p2LocGrid);
+	p1HistGrid = createPlayerGrid(p1HistGrid);
+	p2HistGrid = createPlayerGrid(p2HistGrid);
+	p1FinalGrid = createPlayerGrid(p1FinalGrid);
+	p2FinalGrid = createPlayerGrid(p2FinalGrid);
+
+        System.out.println("Welcome to Battleship!");
+
+	// can only have one scanner call
+        Scanner playerInput = new Scanner(System.in);
+	
+	// record player 1's locations
+        System.out.println("Player 1, ENTER YOUR SHIP'S COORDINATES."); 
+        while ( numP1Ships < 5 ) {
+            System.out.printf("Enter ship %d location:\n", (numP1Ships + 1) );
+	    if ( playerInput.hasNextInt() ) {
+		    p1row = playerInput.nextInt();
+
+		    if ( playerInput.hasNextInt() ) {
+			    p1col = playerInput.nextInt();
+
+			    if ( (p1row > 5 || p1row < 0 ) || (p1col > 5 || p1col < 0 ) ) {
+				    System.out.println("Invalid Coordinates. Choose different coordinates.");
+			    } else if ( p1LocGrid[p1row-1][p1col-1] == '@' ) {
+				    System.out.println("You already have a ship there. Choose different coordinates.");
+			    } else {
+				    p1LocGrid[p1row-1][p1col-1] = '@';
+				    numP1Ships += 1;
+			    }
+		    }
+	    }
+        }
+
+	System.out.println("");
+        printBattleShip(p1LocGrid);
+
+	// print 100 lines to separate the players boards
+	for ( int i=0; i < 99; i++ ) {
+		System.out.println(""); 
+	}
+
+        // record player 2's locations
+        System.out.println("Player 2, ENTER YOUR SHIP'S COORDINATES."); 
+        while ( numP2Ships < 5 ) {
+            System.out.printf("Enter ship %d location:\n", (numP2Ships + 1) );
+	    if ( playerInput.hasNextInt() ) {
+		    p2row = playerInput.nextInt();
+
+		    if ( playerInput.hasNextInt() ) {
+			    p2col = playerInput.nextInt();
+
+			    if ( (p2row > 5 || p2row < 0 ) || (p2col > 5 || p2col < 0 ) ) {
+				    System.out.println("Invalid Coordinates. Choose different coordinates.");
+			    } else if ( p2LocGrid[p2row-1][p2col-1] == '@' ) {
+				    System.out.println("You already have a ship there. Choose different coordinates.");
+			    } else {
+				    p2LocGrid[p2row-1][p2col-1] = '@';
+				    numP2Ships += 1;
+			    }
+		    }
+	    }
+        }
+	System.out.println("");
+	printBattleShip(p2LocGrid);
+        
+	System.out.println("");
+        // now loop through the players taking turns until someone wins
+	do {
+		// player 1 attacks  
+		if ( numP2Ships > 0 ) {
+			System.out.println("Player 1, enter hit row/column:");
+			if ( playerInput.hasNext() ) {
+				r1 = playerInput.nextInt();
+
+				if ( playerInput.hasNextInt() ) {
+					c1 = playerInput.nextInt();
+
+			    		if ( ( r1 > 5 || r1 < 0 ) || ( c1 > 5 || c1 < 0 ) ) {
+				    		System.out.println("Invalid Coordinates. Choose different coordinates.");
+			    		} else if ( p2LocGrid[r1-1][c1-1] == 'X' || p2LocGrid[r1-1][c1-1] == 'O' ) {
+				    		System.out.println("You already fired on this spot. Choose different coordinates.");
+			    		} else {
+						// player 1's attacks are evaluated against player 2's ships
+						if ( p2LocGrid[r1-1][c1-1] == '@' ) {
+							System.out.println("PLAYER 1 HIT PLAYER 2's SHIP!");
+							numP2Ships -= 1;
+							p1HistGrid[r1-1][c1-1] = 'X';
+
+						} else {
+							System.out.println("PLAYER 1 MISSED!");
+							p1HistGrid[r1-1][c1-1] = 'O';
+						}
+			    		}
+				}
+			}
+		}
+
+
+		// print player 1's attack history
+		printBattleShip(p1HistGrid);
+		System.out.println("");
+
+		// if player 1 destroys player 2 ships in the block above, immediately 
+		// have player 1 win
+		if ( numP2Ships == 0 ) { 
+			System.out.println("PLAYER 1 WINS! YOU SUNK ALL YOUR OPPONENTS SHIPS!");
+			noWin = false;
+			break;
+		}
+
+		// player 2 attacks        
+		if ( numP1Ships > 0 ) {
+			System.out.println("Player 2, enter hit row/column:");
+			if ( playerInput.hasNext() ) {
+				r2 = playerInput.nextInt();
+
+				if ( playerInput.hasNextInt() ) {
+					c2 = playerInput.nextInt();
+
+			    		if ( ( r2 > 5 || r2 < 0 ) || ( c2 > 5 || c2 < 0 ) ) {
+				    		System.out.println("Invalid Coordinates. Choose different coordinates.");
+			    		} else if ( p1LocGrid[r2-1][c2-1] == 'X' || p1LocGrid[r2-1][c2-1] == 'O' ) {
+				    		System.out.println("You already fired on this spot. Choose different coordinates.");
+			    		} else {
+						// player 2's attacks are evaluated against player 1's ships
+						if ( p1LocGrid[r2-1][c2-1] == '@' ) {
+							System.out.println("PLAYER 1 HIT PLAYER 2's SHIP!");
+							numP1Ships -= 1;
+							p2HistGrid[r2-1][c2-1] = 'X';
+
+						} else {
+							System.out.println("PLAYER 1 MISSED!");
+							p2HistGrid[r2-1][c2-1] = 'O';
+						}
+			    		}
+				}
+			}
+		}
+	 
+		
+		// print player 2's attack history
+		printBattleShip(p2HistGrid);
+		System.out.println("");
+
+		// if player 2 destroys player 1 ships in the block above, immediately 
+		// have player 2 win
+		if ( numP1Ships == 0 ) {
+			System.out.println("PLAYER 2 WINS! YOU SUNK ALL YOUR OPPONENTS SHIPS");
+			noWin = false;
+			break;
+		}
+
+	} while ( noWin );
+	
+	// now create the final boards
+	p1FinalGrid = createFinalGrid( p1LocGrid, p2HistGrid );
+	p2FinalGrid = createFinalGrid( p2LocGrid, p1HistGrid );	
+
+	// print final boards
+	printBattleShip(p1FinalGrid);
+	System.out.println("");
+	printBattleShip(p2FinalGrid);
+    
+    } //end of main
+    // method creates the final board for the player
+    private static char[][] createFinalGrid( char[][] location, char[][] history) {
+
+	// looks like player 1 location is merged with player 2 history
+	// and player 2 history is merged with player 1 location
+        for ( int x = 0; x < 5; x++ ) {
+            for ( int y = 0; y < 5; y++ ) {
+
+		if ( history[x][y] == 'X' ) {
+	       		location[x][y] = 'X';
+
+		} else if ( history[x][y] == 'O' ) {
+			location[x][y] = 'O';
+		} 
+            }
+        }
+	return location;
+    }
+
+    // method creates the player's grid
+    private static char[][] createPlayerGrid( char[][] playerLocGrid ) {
+        
+        int row = 0;
+        int col = 0;
+        
+        // intialize player grid with '-'
+        for ( int a = 0; a < 5; a++ ) {
+            for ( int b = 0; b < 5; b++ ) {
+                playerLocGrid[a][b] = '-';
+            }
+        }
+        return playerLocGrid;
+    }
+    
+    // method prints out battleship grid
+    private static void printBattleShip(char[][] player) {
+        System.out.print("  ");
+        for (int row = -1; row < 5; row++) {
+            if (row > -1) {
+                System.out.print(row + " ");
+            }
+            for (int column = 0; column < 5; column++) {
+                if (row == -1) {
+                    System.out.print(column + " ");
+                } else {
+                    System.out.print(player[row][column] + " ");
+                }
+            }
+            System.out.println("");
+        }
+    } // end of printBattleShip()
+     
+}
+
