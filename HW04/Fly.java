@@ -54,13 +54,19 @@ public class Fly {
 		mass = mass + addMass;
 		
 		if ( mass < 20 ) {
-			speed = speed + 1
-	}
+			speed = speed + 1 * addMass;
+		} else if ( mass >= 20 ) {
+			speed = speed - 0.5 * addMass; 
 
 	// isDead
 	private void isDead() {
+		if ( mass == 0 ) {
+			return true;
+		} else { 
+			return false; 
+		}
 	}
 
 	public static void main( String args[] ) {
-		// unsure what need sto be in main		
+		// unsure what needs to be in main		
 	}
