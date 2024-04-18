@@ -14,45 +14,80 @@ public class Frog {
 	private static final int DEFAULT_T = 5;
 
 	// constructor with just name
-	Frog() {
-
+	public Frog(String name) {
+		this(name, DEFAULT_A,  DEFAULT_T);
 	}
 
 	// constructor with name, ageInYears, tongueSpeed
-	Frog() {
-
+	public Frog(String name, double ageInYears) {
+		this(name, (int) (12 * ageInYears), DEFAULT_T);
 	}
 
 	// constructor 
-	Frog( String name, int age, double tongueSpeed ) {
-		private String name;
-		private int age; 
-		private double tongueSpeed;
-		private String species;
-		boolean isFroglet;
+	public Frog( String name, int age, double tongueSpeed ) {
+		this.name = name;
+		this.age = aage;
+		this.tongueSpeed = tongueSpeed;
+		this.isFroglet = (age > 1) && (age < 7);
 	}
 
 	// grow 
-	
-	// overloaded grow
-	
+	public void grow( int addMonths ) {
+		// I guess this loop makes sense
+		for ( int i = 1; i <= addMonths; i++) {
+			age += = 1;
+			if (age <= 12) {
+				tongueSpeed += 1;
+			} else if (age <= 30) {
+				// do nothing
+			} else {
+				tongueSpeed -=1;
+			}
+		}
+		// so the tonguespeed is not supposed to decrease below 5?
+		// hmm
+		tongueSpeed = (tongueSpeed < 5) ? 5 : tongueSpeed;
 
-	// eat
-	private void eat( ) {
-
+		// and then the solution list updating froglet
+		isFroglet = (age > 1) && (age < 7 );
 	}
 	
-	// toString
-	private void toString() {
-		if (froglet) {
-			System.out.println("My name is " + name + " and I'm a rare froglet! I'm " + age + " months old and my tongue has a speed of " + tongueSpeed);
-		} else {
-			System.out.println("My name is " + name + " and I'm a rare frog! I'm " + age + " months old and my tongue has a speed of " + tongueSpeed
+	// overloaded grow
+	public void grow() {
+		grow(1);
+	}
+
+	// eat
+	// this is interesting, the 'prey' is a parameter
+	// that is somehow connected to the Fly class?
+	public void eat( Fly prey ) {
+		if ( !prey.isDead() ) {
+			if ( tongueSpeed > prey.getSpeed() ) {
+				if ( prey.getMass() >= ( age * 0.5 ) ) {
+					grow();
+				}
+				prey.setMass(0);
+			} else {
+				prey.grow(1);
+			}
 		}
 	}
 
+		
+	// toString
+	private void toString() {
+		if ( isFroglet ) {
+			System.out.println("My name is %s and I'm a rare froglet! I'm %d months old" + " and my tongue has a speed of %.2f.", name, age, tongueSpeed);
+		} else {
+			System.out.println("My name is %s and I'm a rare frog! I'm %d months old" + " and my tongue has a speed of %.2f.", name, age, tongueSpeed);
+		}
+	}
 
-	// gettor methods
-	
-	// settor methods
+	public static String getSpecies() {
+		return species;
+	}
+
+	public static void setSpecies( String newSpecies ) {
+		species = newSpecies;
+	}
 }

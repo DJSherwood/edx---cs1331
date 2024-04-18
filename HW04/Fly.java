@@ -24,7 +24,7 @@ public class Fly {
  	
 	// speed settor method
 	public void setSpeed( double newSpeed ) {
-		this.s = newSpeed;
+	this.s = newSpeed;
 	}
 
 	// speed gettor method
