@@ -1,42 +1,44 @@
 // Create a Fly class
 public class Fly {
-	double m;
-	double s;
+	private double m;
+	private double s;
+
+	private static final int DEFAULT_M = 5;
+	private static final int DEFAULT_S = 10;
 
 	// Constructor with no parameters
-	Fly() {
-		this(5, 10);
+	public Fly() {
+		this(DEFAULT_M);
 	}
 
 	// Constructor for only mass 
-	Fly( double mass ) {
-		this(5);
-		double speed = 10;
+	public Fly( double m ) {
+		this( m, DEFAULT_S );
 	}
 
 	// Constructor for both mass, speed 
-	Fly( double mass, double speed) {
-		private double mass;	
-		private double speed;
+	public Fly( double m, double s) {
+		this.m = m;	
+		this.s = s;
 	}
  	
 	// speed settor method
-	private void setSpeed( double newSpeed ) {
-		this.speed = newSpeed;
+	public void setSpeed( double newSpeed ) {
+		this.s = newSpeed;
 	}
 
 	// speed gettor method
-	private double getSpeed() {
+	public double getSpeed() {
 		return speed; 
 	}
 
 	// mass settor method
-	private void setMass( double newMass ) {
-		this.mass = newMass;	
+	public void setMass( double newMass ) {
+		this.m = newMass;	
 	}
 
 	// mass gettor method
-	private double getMass() {
+	public double getMass() {
 		return mass; 
 	}
 
@@ -50,17 +52,19 @@ public class Fly {
 	}
 
 	// grow
-	private void grow( int addMass ) {
-		mass = mass + addMass;
+	public void grow( int addMass ) {
+		m = m + addMass;
 		
-		if ( mass < 20 ) {
-			speed = speed + 1 * addMass;
-		} else if ( mass >= 20 ) {
-			speed = speed - 0.5 * addMass; 
+		if ( m < 20 ) {
+			s = s + 1 * addMass;
+		} else if ( m >= 20 ) {
+			s = s - 0.5 * addMass; 
+		}
+	}
 
 	// isDead
-	private void isDead() {
-		if ( mass == 0 ) {
+	public boolean isDead() {
+		if ( m == 0 ) {
 			return true;
 		} else { 
 			return false; 
