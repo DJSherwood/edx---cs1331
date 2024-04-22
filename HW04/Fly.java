@@ -24,12 +24,12 @@ public class Fly {
  	
 	// speed settor method
 	public void setSpeed( double newSpeed ) {
-	this.s = newSpeed;
+		this.s = newSpeed;
 	}
 
 	// speed gettor method
 	public double getSpeed() {
-		return speed; 
+		return s; 
 	}
 
 	// mass settor method
@@ -39,15 +39,17 @@ public class Fly {
 
 	// mass gettor method
 	public double getMass() {
-		return mass; 
+		return m; 
 	}
 
 	// toString
-	private string toString() {
-		if ( mass = 0 ) {
-			System.out.println("I'm dead, but I used to be a fly with a speed of " + speed);
+	public String toString() {
+		if ( m == 0 ) {
+			//System.out.println("I'm dead, but I used to be a fly with a speed of " + s);
+			return String.format("I'm dead, but I used to be a fly with a speed of %.2f.", s);
 		} else {
-			System.out.println("I'm a speedy fly with " + speed + " and " + mass + " mass");
+			//System.out.println("I'm a speedy fly with " + s + " and " + m + " mass");
+			return String.format("I'm a speedy fly with %.2f speed and %.2f mass.", s, m);
 		}
 	}
 
@@ -71,6 +73,4 @@ public class Fly {
 		}
 	}
 
-	public static void main( String args[] ) {
-		// unsure what needs to be in main		
-	}
+}

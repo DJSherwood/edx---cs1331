@@ -26,7 +26,7 @@ public class Frog {
 	// constructor 
 	public Frog( String name, int age, double tongueSpeed ) {
 		this.name = name;
-		this.age = aage;
+		this.age = age;
 		this.tongueSpeed = tongueSpeed;
 		this.isFroglet = (age > 1) && (age < 7);
 	}
@@ -35,7 +35,7 @@ public class Frog {
 	public void grow( int addMonths ) {
 		// I guess this loop makes sense
 		for ( int i = 1; i <= addMonths; i++) {
-			age += = 1;
+			age += 1;
 			if (age <= 12) {
 				tongueSpeed += 1;
 			} else if (age <= 30) {
@@ -75,11 +75,11 @@ public class Frog {
 
 		
 	// toString
-	private void toString() {
+	public String toString() {
 		if ( isFroglet ) {
-			System.out.println("My name is %s and I'm a rare froglet! I'm %d months old" + " and my tongue has a speed of %.2f.", name, age, tongueSpeed);
+			return String.format("My name is %s and I'm a rare froglet! I'm %d months old and my tongue has a speed of %.2f.", name, age, tongueSpeed);
 		} else {
-			System.out.println("My name is %s and I'm a rare frog! I'm %d months old" + " and my tongue has a speed of %.2f.", name, age, tongueSpeed);
+			return String.format("My name is %s and I'm a rare frog! I'm %d months old and my tongue has a speed of %.2f.", name, age, tongueSpeed);
 		}
 	}
 
