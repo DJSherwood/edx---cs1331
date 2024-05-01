@@ -1,13 +1,28 @@
 //  RedAstronaut should have all the attributes of Player. 
 // It should also implement the Impostor interface.
-
+public class  RedAstronaut extends Player implements Impostor {
 // RedAstronaut must have these varaiables:
-// -- skill ( String that represents skill of the Red crewmate. A String value of either inexperienced, experienced, or expert.
-
+// -- skill ( String that represents skill of the Red crewmate. 
+//	-- A String value of either inexperienced, experienced, or expert.
+	DEFAULT_SKILL = "experienced";
+	DEFAULT_SUSLEVEL = 15;
 // RedAstronaut must have constructors for:
 // -- a constructor takes in name, susLevel, skill in specific order. 
 // -- there is a specific keyword in l12 to access the superclass' constructor.
 // -- default values: susLevel 15, skill experienced
+	// so this is probably not correct, need to acces the superclass constructor
+	public RedAstronaut( String name, int susLevel, String skill) {
+		this.name = name; 
+		this.susLeve = susLevel;
+		this.skill = skill;
+	}
+
+// a constructor that takes in a name and assigns the following default values:
+// -- susLevel: 15
+// -- skill: experienced
+	public RedAstronaut( String name ) {
+		this( name, DEFAULT_SKILL,  DEFAULT_SUSLEVEL );
+	}
 
 // RedAstronaut must have these methods:
 // emergencyMeeting()
@@ -41,3 +56,7 @@
 // returns "My name is [name], and I have a suslevel of [suslevel]. I am currently (frozen / not frozen ). I am a [skill] player!"
 // if suslevel is greather than 15, return the String in all capital letters
 // you must use the toString() method from the Player class to receive full credit.
+//
+//
+
+} 
