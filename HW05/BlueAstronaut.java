@@ -1,15 +1,18 @@
-//  RedAstronaut should have all the attributes of Player. 
-// It should also implement the Impostor interface.
-
-// RedAstronaut must have these varaiables:
-// -- skill ( String that represents skill of the Red crewmate. A String value of either inexperienced, experienced, or expert.
-
-// RedAstronaut must have constructors for:
-// -- a constructor takes in name, susLevel, skill in specific order. 
-// -- there is a specific keyword in l12 to access the superclass' constructor.
-// -- default values: susLevel 15, skill experienced
-
-// RedAstronaut must have these methods:
+// BlueAstronaut implements the Crewmate interface
+//
+// variables
+// -- numTasks: integer ( number of tasks to complete )
+// -- taskSpeed: positive integer ( not zero, speed at which the astronaut completes each task)
+// 
+// constructors
+// first constructor takes in name, susLevel, numTasks, and taskSpeed 
+// second constructor just takes in a name and assigns the following default values:
+// -- susLevel: 15
+// -- numTasks: 6
+// -- taskSpeed: 10
+//
+// methods
+// BlueAstronaut must have these methods:
 // emergencyMeeting()
 // -- a frozen player cannot vall an emergency meeting
 // -- if two players have the same suslevel, no player will be voted off
